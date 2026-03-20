@@ -1,0 +1,35 @@
+<!-- Imports -->
+<link rel="stylesheet" href="../assets/css/main_style.css">
+<link rel="stylesheet" href="../assets/css/colors.css">
+<link rel="stylesheet" href="../assets/css/header_style.css">
+
+<!-- Main Header -->
+<header class="main-header">
+    <!-- My Logo -->
+    <img src="../assets/images/chan_chan_logo.svg" alt="chan chan logo" class="my_logo">
+
+    <!-- Navigation Menu -->
+    <nav class="header-nav">
+        <ul>
+            <li><a class="nav-link" href="#my-works">Works</a></li>
+            <li><a class="nav-link" href="#my-skills">Skills</a></li>
+            <li><a class="nav-link" href="#my-resume">CV/Resume</a></li>
+            <!-- <li><a href="../pages/about_me.html">About Me</a></li> -->
+            <li><a class="nav-link" href="#contact-me-container">Contact</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Hide Header In-Line JS -->
+<script>
+    (function() {
+        const header = document.querySelector('.main-header');
+        if (header) {
+            window.addEventListener('scroll', () => {
+                // If scrolled down (scrollY > 0), add hidden class. 
+                // If at the top (scrollY === 0), remove it.
+                header.classList.toggle('hidden', window.scrollY > 0);
+            });
+        }
+    })();
+</script>

@@ -1,0 +1,42 @@
+[
+    {
+        "project_title": "Seatlify | Event Management Platform",
+        "project_description": "Developed during my second year of college, Seatlify is one of my first major projects—a Minimum Viable Product (MVP) event management platform designed within a rigorous 12-week production timeline. Built as a Business-to-Business (B2B) solution, the platform focuses on a per-event market model featuring tiered packages based on attendee count to meet the core functional needs of the event management industry. The system is streamlined around three core features: personalized event creation, custom seat planning, and a comprehensive virtual ticketing and invitation system. This project serves as a focused EMS platform specifically tailored to transform manual event coordination into a seamless digital experience.",
+        "project_image": "https://lh3.googleusercontent.com/d/1P3NW5FixZEo7gB6ql_rWcJ62w7x0MvBG",
+        "technologies": ["HTML", "CSS", "JavaScript", "PHP", "mySQL", "Bootstrap"],
+        "team": ["Sean Lacson"]
+    },
+    
+    {
+        "project_title": "CESCON 2026",
+        "project_description": "Winning first place at the 2026 CIIT Emerging Startup Convention (CESCON) was a definitive milestone, where I pitched and secured the top spot for my business startup concept. As the solo developer behind Seatlify, I conceptualized and built the web-based Event Management System to address real-world coordination challenges. This recognition at CESCON validates the platform's potential as a viable B2B solution and highlights my ability to bridge technical development with entrepreneurial strategy.",
+        "project_image": "https://lh3.googleusercontent.com/d/1KOFM-7eQ3GcadEGaXOpkYMHUoZ4_ZT3J",
+        "technologies": ["HTML", "CSS", "JavaScript", "PHP", "mySQL", "Bootstrap"],
+        "team": ["Sean Lacson"]
+    },
+    
+    {
+        "project_title": "Tadaima Otaku Store | Anime Merchandise Store App for Android",
+        "project_description": "Collaboratively developed as a final project for Mobile App Development 1, this Android application for the Tadaima Otaku Store was built using Java and Kotlin within Android Studio. Working alongside my college classmates, we engineered a functional mobile solution tailored for a niche retail environment, focusing on seamless performance and user-centric design. This project highlights my ability to work within a development team to translate academic requirements into a practical, platform-specific application.",
+        "project_image": "https://lh3.googleusercontent.com/d/1NWTdnfqIv6lhM4Hdz5agC2o1HAt0BoOj",
+        "technologies": ["Android Studio", "Kotlin"],
+        "team": ["Sean Lacson", "Jianne Abinales", "Azzy dela Cruz", "Raymond Canapi", "Roberto Layug II"]
+    },
+
+    {
+        "project_title": "Sharps & Flats | Music Store App for iOS and Multiple Platforms",
+        "project_description": "Developed as the final project for Mobile App Development 2, Sharps & Flats is a cross-platform music store application designed for iOS and other major environments. Built collaboratively with my classmates, the project leverages the Dart programming language and the Flutter framework to deliver a unified, high-performance user experience. Developed using VS Code and Android Studio, this application demonstrates my proficiency in building scalable, multi-platform solutions and navigating the complexities of the full mobile development lifecycle.",
+        "project_image": "https://lh3.googleusercontent.com/d/10lNfy3JrFr0DighA9xCVRfP2wbwpA-MI",
+        "technologies": ["Dart", "Flutter", "Android Studio", "VS Code", "Firebase"],
+        "team": ["Zach Quita", "Sean Lacson", "Ricoh Ng", "Roberto Layug II"]
+    },
+
+
+    {
+        "project_title": "CIIT Capstone Archive Web Proposal | STS Final Project",
+        "project_description": "The CIIT Capstone Archive Proposal (2026) is a collaborative project developed as part of the Science, Technology, and Society curriculum. Working alongside my classmates, I helped conceptualize a digital repository designed to preserve and showcase the innovative research and technical capstones of the CIIT community. This proposal examines the intersection of technology and academic progress, advocating for a streamlined, accessible archive that bridges the gap between past student achievements and future research initiatives.",
+        "project_image": "https://lh3.googleusercontent.com/d/1OMqttVlDXj0OEEViQ7aYXT_PdJ12WKtI",
+        "technologies": ["HTML", "CSS", "JavaScript", "Astro"],
+        "team": ["Zach Quita", "Sean Lacson", "Ricoh Ng", "other STS Students"]
+    }
+]

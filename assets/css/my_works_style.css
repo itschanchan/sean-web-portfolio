@@ -1,0 +1,34 @@
+#works-descriptions-container {
+    padding-right: 100px; /* Add some padding for better readability */
+}
+
+.my-works {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0 120px;
+}
+
+/* Carousel Settings */
+.works-carousel {
+    width: 100%;
+    max-width: 700px;
+    margin: 0;
+}
+
+.sticky-column {
+    position: sticky;
+    top: 100px; /* Aligns with header height (80px) + 20px gap */
+    height: 750px; /* Adjust this value to change the height of the sticky area */
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.works-image {
+    width: 100%;
+    height: 500px; /* Adjust this value to change the image height */
+    object-fit: cover;
+    border-radius: 20px;
+}

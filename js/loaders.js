@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             loadComponent('components/header.html', 'header-container'),
             loadComponent('components/activity_bar.html', 'activity-bar-container'),
             loadComponent('pages/intro.html', 'intro-container'),
-            loadComponent('components/advertisment.html', 'advertisment-container'),
+            loadComponent('components/banner.html', 'banner-container'),
             loadComponent('pages/my_works.html', 'my-works-container'),
             loadComponent('pages/my_skills.html', 'my-skills-container'),
             loadComponent('pages/my_resume.html', 'my-resume-container'),

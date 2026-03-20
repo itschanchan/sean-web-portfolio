@@ -1,9 +1,9 @@
 (function() {
-    const adSection = document.querySelector('.advertisment');
+    const adSection = document.querySelector('.banner');
 
     if (!adSection) return;
 
-    const elementsToScale = adSection.querySelectorAll('.velocity-text, .ad-image');
+    const elementsToScale = adSection.querySelectorAll('.velocity-text, .banner-image');
 
     function onScroll() {
         const rect = adSection.getBoundingClientRect();

@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Paytone+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('../../assets/css/effects/glass_effect.css');
+
 
 /* ID selected from index.html */
 #intro-container {

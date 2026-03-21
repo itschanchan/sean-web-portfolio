@@ -1,16 +1,16 @@
+@import url('glass_effect.css');
+
 .activity-bar {
     position: fixed;
     top: 50%;
     right: 30px;
     transform: translateY(-50%);
-    background-color: var(--primary-color);
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 20px 10px;
-    border-radius: 50px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     z-index: 1000;
+    border-radius: 50px;
 }
 
 .activity-bar button {
@@ -23,6 +23,8 @@
     align-items: center;
     color: white; /* Ensures icons are visible on primary color */
     transition: transform 0.2s ease, opacity 0.2s ease;
+    position: relative;
+    z-index: 1;
 }
 
 .material-symbols-outlined {

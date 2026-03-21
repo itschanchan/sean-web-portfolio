@@ -1,3 +1,5 @@
+@import url('glass_effect.css');
+
 html {
     scroll-behavior: smooth;
     scroll-padding-top: 100px; /* Ensures content isn't hidden behind the sticky header */

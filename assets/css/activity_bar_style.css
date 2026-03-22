@@ -1,4 +1,4 @@
-@import url('glass_effect.css');
+@import url('effects/glass_effect.css');
 
 .activity-bar {
     position: fixed;
@@ -13,7 +13,7 @@
     border-radius: 50px;
 }
 
-.activity-bar button {
+.activity-bar a {
     background: none;
     border: none;
     padding: 0;
@@ -25,17 +25,24 @@
     transition: transform 0.2s ease, opacity 0.2s ease;
     position: relative;
     z-index: 1;
+    text-decoration: none;
 }
 
 .material-symbols-outlined {
     font-size: 24px;
-    color: #000000;
+    color: var(--text-color);
     /* Optional: Regular style by default */
     /* font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; */
 }
 
-.activity-bar button:hover {
+.activity-bar a:hover {
     transform: scale(1.2);
+    animation: bob 2s infinite ease-in-out 0.2s;
+}
+
+@keyframes bob {
+    0%, 100% { transform: scale(1.2) translateY(0); }
+    50% { transform: scale(1.2) translateY(-3px); }
 }
 
 .activity-bar .material-symbols-outlined {

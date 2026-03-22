@@ -10,11 +10,12 @@
     position: relative; /* Context for parallax */
 }
 
-.ad-image {
+.banner-image {
     max-width: 100%;
     height: auto;
     width: 800px; /* Increased size */
     object-fit: cover;
+    border-radius: 20px;
 }
 
 .scroller {
@@ -33,14 +34,34 @@
     padding-right: 50px; /* Space between repeated text */
 }
 
-@media (min-width: 768px) {
-  .scroller {
-    font-size: 8rem; /* Adjusted for impact */
-    line-height: 8rem;
-  }
-}
 
 .velocity-text {
     width: 100%;
     overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .scroller {
+    font-size: 4rem; /* Tablet size */
+    line-height: 4rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .scroller {
+    font-size: 8rem; /* Desktop size */
+    line-height: 8rem;
+  }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .banner {
+        padding: 60px 0;
+        gap: 30px;
+    }
+
+    .banner-image {
+        width: 90%;
+    }
 }

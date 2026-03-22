@@ -4,20 +4,28 @@
 <link rel="stylesheet" href="../assets/css/header_style.css">
 
 <!-- Main Header -->
-<header class="main-header glass-effect">
+<header class="main-header glass-effect guidelines">
     <!-- My Logo -->
-    <img src="../assets/images/chan_chan_logo.svg" alt="chan chan logo" class="my_logo">
+    <img src="../assets/images/chan_chan_logo.svg" alt="chan chan logo" class="my_logo guidelines">
 
     <!-- Navigation Menu -->
-    <nav class="header-nav">
+    <nav class="header-nav guidelines">
         <ul>
             <li><a class="nav-link" href="#my-works">Works</a></li>
             <li><a class="nav-link" href="#my-skills">Skills</a></li>
             <li><a class="nav-link" href="#my-resume">CV/Resume</a></li>
             <!-- <li><a href="../pages/about_me.html">About Me</a></li> -->
             <li><a class="nav-link" href="#contact-me-container">Contact</a></li>
+            <button id="theme-toggle" class="btn border-0 p-0" aria-label="Toggle Dark Mode">
+                <span class="material-symbols-outlined" style="font-size: 1.5rem; vertical-align: middle;">dark_mode</span>
+            </button>
         </ul>
     </nav>
+
+    <!-- Mobile Menu Toggle -->
+    <button id="mobile-menu-toggle" class="btn border-0 p-0" aria-label="Toggle Navigation">
+        <span class="material-symbols-outlined" style="font-size: 2rem; color: var(--text-color);">menu</span>
+    </button>
 </header>
 
 <!-- Hide Header In-Line JS -->
@@ -29,6 +37,52 @@
                 // If scrolled down (scrollY > 0), add hidden class. 
                 // If at the top (scrollY === 0), remove it.
                 header.classList.toggle('hidden', window.scrollY > 0);
+            });
+        }
+
+        // Dark Mode Logic
+        const toggleBtn = document.getElementById('theme-toggle');
+        const icon = toggleBtn.querySelector('span');
+        const html = document.documentElement;
+
+        // Check Local Storage or System Preference
+        const savedTheme = localStorage.getItem('theme');
+        
+        // Initialize to Dark Mode by default
+        if (savedTheme === 'dark' || !savedTheme) {
+            html.setAttribute('data-theme', 'dark');
+            icon.textContent = 'light_mode';
+            window.dispatchEvent(new Event('theme-changed'));
+        }
+
+        toggleBtn.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            icon.textContent = newTheme === 'dark' ? 'light_mode' : 'dark_mode';
+
+            // Dispatch event for grainient.js to pick up
+            window.dispatchEvent(new Event('theme-changed'));
+        });
+
+        // Mobile Menu Logic
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navList = document.querySelector('.header-nav ul');
+
+        if (mobileMenuToggle && navList) {
+            mobileMenuToggle.addEventListener('click', () => {
+                navList.classList.toggle('active');
+                mobileMenuToggle.querySelector('span').textContent = navList.classList.contains('active') ? 'close' : 'menu';
+            });
+
+            // Close menu when a link is clicked
+            navList.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navList.classList.remove('active');
+                    mobileMenuToggle.querySelector('span').textContent = 'menu';
+                });
             });
         }
     })();

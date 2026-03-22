@@ -1,14 +1,18 @@
 .resume-title {
     display: flex;
-    flex-direction: flex-start;
-    text-align: center;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 80px;
     margin-top: 2rem;
+
+    font-family: 'Funnel Display', sans-serif;
     font-size: 2.5rem;
     font-weight: bold;
 }
 
+
 .my-resume {
-    margin-top: 5rem;
+    margin-top: 0;
     padding: 3rem;
     width: 100%;
     min-height: 80vh;

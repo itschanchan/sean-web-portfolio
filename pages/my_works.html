@@ -5,17 +5,14 @@
 <link rel="stylesheet" href="../assets/guidelines.css">
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 
 <div class="my-works guidelines" id="my-works">
     <h1>My Works</h1>
-    <hr>
-    <p>Here are some of the projects I have worked on:</p>
+    <!-- <p>Here are some of the projects I have worked on:</p> -->
 </div>
 
 <!-- Container for Side-by-Side Layout -->
 <div class="row works-container m-0 guidelines">
-
     <!-- Left Column: Sticky Carousel -->
     <div class="col-md-6 sticky-column guidelines">
         <div class="works-carousel guidelines">
@@ -85,7 +82,7 @@
 
                 // Add description section
                 descriptionsContainer.insertAdjacentHTML('beforeend', `
-                    <div class="works-description d-flex flex-column justify-content-center" style="min-height: 80vh;" data-index="${index}">
+                    <div class="works-description glass-effect d-flex flex-column" data-index="${index}">
                         <h2>${data.project_title}</h2>
                         <hr class="my-3" style="width: 100%; opacity: 0.2;">
                         

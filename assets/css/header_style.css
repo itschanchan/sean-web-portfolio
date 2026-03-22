@@ -1,4 +1,4 @@
-@import url('glass_effect.css');
+@import url('effects/glass_effect.css');
 
 html {
     scroll-behavior: smooth;
@@ -9,7 +9,8 @@ html {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: var(--primary-bg-color);
+    background-color: transparent; /* Transparent background to allow the glass effect to show */
+    /* background-color: var(--primary-bg-color); */
     position: fixed;
     top: 0;
     left: 0;
@@ -45,4 +46,67 @@ html {
 
 .my_logo {
     height: 70px;
+}
+
+@keyframes bob {
+    0%, 100% { transform: scale(1.2) translateY(0); }
+    50% { transform: scale(1.2) translateY(-3px); }
+}
+
+#theme-toggle .material-symbols-outlined {
+    transition: transform 0.3s ease;
+}
+
+#theme-toggle:hover .material-symbols-outlined {
+    transform: scale(1.2);
+    animation: bob 2s infinite ease-in-out 0.3s;
+}
+
+/* Mobile Menu Toggle (Hidden on Desktop) */
+#mobile-menu-toggle {
+    display: none;
+    cursor: pointer;
+}
+
+/* Responsive Styles (Co-located) */
+@media (max-width: 768px) {
+    .main-header {
+        padding: 0 20px; /* Reduce padding on mobile */
+        height: 70px;
+    }
+
+    .header-nav ul {
+        position: absolute;
+        top: 70px; /* Align with header height */
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        background-color: var(--glass-bg);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        padding: 2rem 0;
+        gap: 2rem;
+        border-bottom: 1px solid var(--glass-border);
+        box-shadow: 0 10px 30px var(--glass-shadow);
+        
+        /* Hidden State */
+        display: flex; /* Keep flex layout */
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-20px);
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        pointer-events: none;
+    }
+
+    .header-nav ul.active {
+        visibility: visible;
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: all;
+    }
+
+    #mobile-menu-toggle {
+        display: block; /* Show on mobile */
+    }
 }

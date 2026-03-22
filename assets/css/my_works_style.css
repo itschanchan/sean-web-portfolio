@@ -1,4 +1,4 @@
-@import url('glass_effect.css');
+@import url('effects/glass_effect.css');
 
 
 #works-descriptions-container {
@@ -9,7 +9,12 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding: 0 120px;
+    padding-left: 80px;
+}
+
+.my-works h1 {
+    font-family: 'Funnel Display', sans-serif;
+    font-size: 2.5rem;
 }
 
 /* Carousel Settings */
@@ -22,7 +27,7 @@
 .sticky-column {
     position: sticky;
     top: 100px; /* Aligns with header height (80px) + 20px gap */
-    height: 750px; /* Adjust this value to change the height of the sticky area */
+    height: 540px; /* Adjust this value to change the height of the sticky area */
     z-index: 100;
     display: flex;
     align-items: center;
@@ -34,4 +39,48 @@
     height: 500px; /* Adjust this value to change the image height */
     object-fit: cover;
     border-radius: 20px;
+}
+
+.works-description {
+    position: relative; /* Required for glass-effect positioning */
+    padding: 3rem;
+    margin-bottom: 10rem; /* Adjust this value to change the gap between descriptions */
+    border-radius: 20px;
+}
+
+.works-description:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    .my-works {
+        padding-left: 20px;
+        align-items: center; /* Center the title */
+    }
+
+    #works-descriptions-container {
+        padding-right: 0;
+    }
+
+    .sticky-column {
+        position: sticky;
+        top: 70px; /* Height of the main header + buffer */
+        height: auto; /* Override fixed height */
+        z-index: 1; /* Lower z-index so text scrolls over it */
+        padding: 10px 0;
+        background: transparent; 
+    }
+
+    .works-image {
+        height: 200px; /* Smaller image height for mobile */
+    }
+
+    .works-description {
+        z-index: 2; /* Ensure description is on top */
+        padding: 1.5rem; /* Reduce padding to fit more text */
+        font-size: 0.95rem; /* Slightly smaller text */
+        background: var(--glass-bg); /* Ensure contrast against background */
+        backdrop-filter: blur(20px);
+    }
 }

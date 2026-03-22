@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Paytone+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('../../assets/css/effects/glass_effect.css');
+@import url('effects/glass_effect.css');
 
 
 /* ID selected from index.html */
@@ -38,11 +38,49 @@
     width: 700px;
     position: absolute;
     top: 160px;
-    right: 100px;
+    right: 150px;
+    padding: 30px;
+    border-radius: 20px;
 }
 
 .intro-text {
     font-family: inherit;
     letter-spacing: 0px;
     text-align: justify;;
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 768px) {
+    #intro-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        min-height: 100vh;
+        padding: 120px 20px 40px; /* Top padding clears the fixed header */
+        gap: 2rem;
+    }
+
+    .main-title {
+        position: static; /* Remove absolute positioning */
+        align-items: center;
+        text-align: center;
+    }
+
+    .main-title h1 {
+        font-size: 4em; /* Scale down for mobile screens */
+        line-height: 1.1;
+    }
+
+    .introduction {
+        position: static; /* Remove absolute positioning */
+        width: 100%;
+        max-width: 500px;
+        margin: 0;
+    }
+
+    .intro-text {
+        font-size: 0.8rem;
+    }
 }

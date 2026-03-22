@@ -1,4 +1,5 @@
 @import url('effects/glass_effect.css');
+@import url('effects/border_glow_effect.css');
 
 .activity-bar {
     position: fixed;

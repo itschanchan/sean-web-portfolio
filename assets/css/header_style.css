@@ -11,7 +11,7 @@ html {
     align-items: center;
     background-color: transparent; /* Transparent background to allow the glass effect to show */
     /* background-color: var(--primary-bg-color); */
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
@@ -22,6 +22,7 @@ html {
     
     padding: 0 80px; /* Horizontal Padding [sides] */
     transition: transform 0.3s ease-in-out; /* Smooth transition for hiding/showing */
+    transform: translateY(0); /* Explicit start position for the transition */
 }
 
 /* Class to hide the header */

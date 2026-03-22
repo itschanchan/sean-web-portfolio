@@ -1,20 +1,43 @@
 @import url('effects/glass_effect.css');
+@import url('effects/border_glow_effect.css');
 
 
 #works-descriptions-container {
     padding-right: 100px; /* Add some padding for better readability */
 }
 
-.my-works {
+.my-works-title {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     padding-left: 80px;
+    padding-right: 100px;
+    margin-bottom: 2rem;
+    height: 150px;
+
 }
 
-.my-works h1 {
+.my-works-title h1 {
     font-family: 'Funnel Display', sans-serif;
-    font-size: 2.5rem;
+    font-size: 5em;
+    margin: 0;
+    line-height: 1;
+}
+
+.title-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.subtitle {
+    margin: 0;
+}
+
+.title-description {
+    max-width: 400px;
+    text-align: right;
+    margin-bottom: 0;
 }
 
 /* Carousel Settings */
@@ -25,8 +48,8 @@
 }
 
 .sticky-column {
-    position: sticky;
-    top: 100px; /* Aligns with header height (80px) + 20px gap */
+    position: relative;
+    /* top: 100px; -> Handled by JS */
     height: 540px; /* Adjust this value to change the height of the sticky area */
     z-index: 100;
     display: flex;
@@ -54,9 +77,15 @@
 
 /* Responsive Design for Mobile */
 @media (max-width: 768px) {
-    .my-works {
+    .my-works-title {
         padding-left: 20px;
-        align-items: center; /* Center the title */
+        padding-right: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .title-description {
+        text-align: left;
     }
 
     #works-descriptions-container {
@@ -64,8 +93,8 @@
     }
 
     .sticky-column {
-        position: sticky;
-        top: 70px; /* Height of the main header + buffer */
+        position: relative;
+        /* top: 70px; -> Handled by JS */
         height: auto; /* Override fixed height */
         z-index: 1; /* Lower z-index so text scrolls over it */
         padding: 10px 0;

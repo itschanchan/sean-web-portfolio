@@ -1,0 +1,30 @@
+/* Border Glow Effect */
+.border-glow-effect {
+  --edge-proximity: 0;
+  --cursor-angle: 45deg;
+}
+
+/* SHARP BORDER */
+.border-glow-effect::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+
+  background: conic-gradient(from var(--cursor-angle), #c084fc, #f472b6, #38bdf8, #c084fc);
+
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+/* SHOW ONLY ON HOVER */
+.border-glow-effect:hover::before {
+  opacity: calc(var(--edge-proximity) / 100);
+}

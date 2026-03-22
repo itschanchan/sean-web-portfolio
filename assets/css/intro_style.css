@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Paytone+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('effects/glass_effect.css');
-
+@import url('effects/border_glow_effect.css');
 
 /* ID selected from index.html */
 #intro-container {
@@ -33,12 +33,26 @@
     letter-spacing: 10px;
 }
 
+.intro-content-wrapper {
+    position: absolute;
+    top: 50%;
+    right: 150px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.main-tagline h1 {
+    font-family: 'Funnel Display', sans-serif;
+    font-weight: bolder;
+    font-size: 3em;
+    margin: 0;
+}
+
 /* introduction on the top right position */
 .introduction {
     width: 700px;
-    position: absolute;
-    top: 160px;
-    right: 150px;
     padding: 30px;
     border-radius: 20px;
 }
@@ -73,8 +87,14 @@
         line-height: 1.1;
     }
 
+    .intro-content-wrapper {
+        position: static;
+        transform: none;
+        width: 100%;
+        align-items: center;
+    }
+
     .introduction {
-        position: static; /* Remove absolute positioning */
         width: 100%;
         max-width: 500px;
         margin: 0;

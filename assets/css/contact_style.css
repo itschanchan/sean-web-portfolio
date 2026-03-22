@@ -1,3 +1,7 @@
+@import url('effects/glass_effect.css');
+@import url('effects/border_glow_effect.css');
+
+
 .contact {
     display: flex;
     flex-direction: column;
@@ -56,16 +60,16 @@
 }
 
 /* Hover Effect: Grow and Bob */
-.contact-card:hover .icon-box {
+/* .contact-card:hover .icon-box {
     transform: scale(1.1);
     animation: bob 2s infinite ease-in-out;
-}
+} */
 
 /* Reuse bob animation from header/activity bar or define here if needed */
-@keyframes bob {
+/* @keyframes bob {
     0%, 100% { transform: scale(1.1) translateY(0); }
     50% { transform: scale(1.1) translateY(-5px); }
-}
+} */
 
 /* Responsive Adjustments */
 @media (max-width: 768px) {
@@ -79,4 +83,94 @@
         justify-content: center;
         gap: 2rem;
     }
+
+    .contact-form {
+        width: 90%;
+        padding: 2rem;
+        margin: 2rem auto;
+    }
+}
+
+/* --- Contact Form Design --- */
+
+.contact-form {
+    width: 100%;
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 3rem;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-form label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 10px;
+    opacity: 0.9;
+}
+
+.contact-form label:first-of-type {
+    margin-top: 0;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    padding: 1.2rem 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 15px;
+    color: var(--text-color);
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), 
+                box-shadow 0.3s ease, 
+                border-color 0.3s ease, 
+                background 0.3s ease;
+}
+
+.contact-form textarea {
+    min-height: 180px;
+    resize: vertical;
+}
+
+/* Rise Effect on Hover & Focus */
+.contact-form input:hover,
+.contact-form textarea:hover,
+.contact-form input:focus,
+.contact-form textarea:focus {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 15px 30px -10px var(--glass-shadow);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--text-color);
+}
+
+.submit-btn {
+    margin-top: 2rem;
+    padding: 1.2rem;
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-color);
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.submit-btn:hover {
+    transform: translateY(-5px);
+    background: var(--glass-hover-bg);
+    box-shadow: 0 10px 20px -5px var(--glass-shadow);
 }

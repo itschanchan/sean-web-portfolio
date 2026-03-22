@@ -33,11 +33,6 @@
     (function() {
         const header = document.querySelector('.main-header');
         if (header) {
-            window.addEventListener('scroll', () => {
-                // If scrolled down (scrollY > 0), add hidden class. 
-                // If at the top (scrollY === 0), remove it.
-                header.classList.toggle('hidden', window.scrollY > 0);
-            });
         }
 
         // Dark Mode Logic

@@ -5,7 +5,7 @@
 
     const elementsToScale = adSection.querySelectorAll('.velocity-text, .banner-image');
 
-    function onScroll() {
+    function animate() {
         const rect = adSection.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
 
@@ -27,9 +27,9 @@
         elementsToScale.forEach(el => {
             el.style.transform = `scale(${scale})`;
         });
+
+        requestAnimationFrame(animate);
     }
 
-    window.addEventListener('scroll', () => requestAnimationFrame(onScroll));
-    // Initial call to set state
-    onScroll();
+    requestAnimationFrame(animate);
 })();

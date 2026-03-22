@@ -138,6 +138,12 @@ class FolderEffect {
 
 // Initialize for Resume Page
 const initResumeFolder = () => {
+    // FIX: Move modal to body to prevent scrollSoap.js transform issues
+    const modal = document.getElementById('resumeModal');
+    if (modal && modal.parentNode !== document.body) {
+        document.body.appendChild(modal);
+    }
+
     if (document.getElementById('resume-folder-container')) {
         new FolderEffect('resume-folder-container', {
             resumeUrl: '../assets/docs/sean_lacson_resume.pdf'

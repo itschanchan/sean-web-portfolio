@@ -43,4 +43,29 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     animate();
+
+    // Handle Anchor Links (Fixes navigation jumping due to fixed positioning)
+    document.addEventListener('click', (e) => {
+        const link = e.target.closest('a[href^="#"]');
+        if (!link) return;
+
+        const targetId = link.getAttribute('href');
+        if (targetId.length <= 1) return; // Ignore '#' or empty
+
+        const targetElem = document.querySelector(targetId);
+        if (targetElem) {
+            e.preventDefault();
+
+            // Calculate target position relative to the document
+            // rect.top is visual position, currentY is current transform offset
+            const rect = targetElem.getBoundingClientRect();
+            const absoluteTop = rect.top + currentY;
+            const offset = 100; // Header offset
+
+            window.scrollTo({
+                top: absoluteTop - offset,
+                behavior: 'auto' // Let the smooth scroll loop handle the animation
+            });
+        }
+    });
 });

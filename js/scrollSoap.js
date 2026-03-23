@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // PERFORMANCE FIX: Disabled Scroll Hijacking
     // This script was causing lag due to conflicts with backdrop-filter (Glass Effect)
     // and position: sticky elements. Native scrolling provides better performance.
-    // return;
+    return;
 
     // Configuration
     const ease = 0.10; // Lower = more slippery

@@ -113,3 +113,24 @@
         backdrop-filter: blur(20px);
     }
 }
+
+.visit-site-btn {
+    display: inline-block;
+    width: fit-content;
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+    color: var(--text-color);
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.visit-site-btn:hover {
+    background: var(--glass-hover-bg);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}

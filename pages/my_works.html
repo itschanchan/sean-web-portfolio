@@ -83,6 +83,11 @@
                 // Generate Team HTML
                 const teamList = data.team ? data.team.join(', ') : '';
 
+                // Generate Website Link Button
+                const linkHtml = (data.website_link && data.website_link.trim() !== "") 
+                    ? `<a href="${data.website_link}" target="_blank" rel="noopener noreferrer" class="visit-site-btn">Visit Website</a>` 
+                    : '';
+
                 // Add description section
                 descriptionsContainer.insertAdjacentHTML('beforeend', `
                     <div class="works-description glass-effect border-glow-effect d-flex flex-column" data-index="${index}">
@@ -92,6 +97,7 @@
                         <div class="mb-3">Technologies: ${tagsHtml}</div>
                         <p>${data.project_description}</p>
                         <div class="mt-2"><strong>Team:</strong> ${teamList}</div>
+                        ${linkHtml}
                     </div>`);
             });
 

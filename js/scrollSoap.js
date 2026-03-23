@@ -1,76 +1,52 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const scroller = document.getElementById('smooth-content');
-    
-    // If the wrapper doesn't exist, stop.
-    if (!scroller) return;
-
-    // PERFORMANCE FIX: Disabled Scroll Hijacking
-    // This script was causing lag due to conflicts with backdrop-filter (Glass Effect)
-    // and position: sticky elements. Native scrolling provides better performance.
-    return;
-
-    // Configuration
-    const ease = 0.10; // Lower = more slippery
-    let currentY = 0;
-    let targetY = 0;
-
-    // Set required styles for the fixed container
-    Object.assign(scroller.style, {
-        position: 'fixed',
-        top: '0',
-        left: '0',
-        width: '100%',
-        willChange: 'transform',
-        zIndex: '1' // Ensure it sits above background but respects other z-indexes
-    });
-
-    // ResizeObserver ensures body height matches content height
-    // This keeps the native scrollbar working correctly even as content loads dynamically
-    const resizeObserver = new ResizeObserver(() => {
-        document.body.style.height = `${scroller.scrollHeight}px`;
-    });
-    resizeObserver.observe(scroller);
-
-    // Animation Loop
-    function animate() {
-        targetY = window.scrollY;
-        
-        // Linear Interpolation (Lerp) for smooth effect
-        currentY += (targetY - currentY) * ease;
-
-        // Expose current scroll position for other scripts (like manual sticky elements)
-        window.smoothScrollY = currentY;
-        
-        // Apply the transform
-        scroller.style.transform = `translate3d(0, -${currentY}px, 0)`;
-        
-        requestAnimationFrame(animate);
+    // Initialize Lenis for smooth scrolling
+    // This library preserves native scroll behavior (fixing sticky elements)
+    // while simply interpolating the scroll position to prevent lag.
+    if (typeof Lenis === 'undefined') {
+        console.warn("Lenis not loaded. Smooth scrolling disabled.");
+        return;
     }
 
-    animate();
+    const lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential ease out
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        mouseMultiplier: 1,
+        smoothTouch: false,
+        touchMultiplier: 2,
+    });
 
-    // Handle Anchor Links (Fixes navigation jumping due to fixed positioning)
-    document.addEventListener('click', (e) => {
-        const link = e.target.closest('a[href^="#"]');
-        if (!link) return;
+    // Main Animation Loop
+    function raf(time) {
+        lenis.raf(time);
+        requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
 
-        const targetId = link.getAttribute('href');
-        if (targetId.length <= 1) return; // Ignore '#' or empty
+    // Integration with GSAP ScrollTrigger
+    if (typeof ScrollTrigger !== 'undefined') {
+        lenis.on('scroll', ScrollTrigger.update);
+        
+        gsap.ticker.add((time) => {
+            lenis.raf(time * 1000);
+        });
+        
+        gsap.ticker.lagSmoothing(0);
+    }
 
-        const targetElem = document.querySelector(targetId);
-        if (targetElem) {
+    // Handle Anchor Links (Smooth scroll to section)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
             e.preventDefault();
-
-            // Calculate target position relative to the document
-            // rect.top is visual position, currentY is current transform offset
-            const rect = targetElem.getBoundingClientRect();
-            const absoluteTop = rect.top + currentY;
-            const offset = 100; // Header offset
-
-            window.scrollTo({
-                top: absoluteTop - offset,
-                behavior: 'auto' // Let the smooth scroll loop handle the animation
+            const targetId = this.getAttribute('href');
+            if (targetId === '#' || !targetId) return;
+            
+            lenis.scrollTo(targetId, {
+                offset: -100, // Offset for header height
+                duration: 1.5
             });
-        }
+        });
     });
 });

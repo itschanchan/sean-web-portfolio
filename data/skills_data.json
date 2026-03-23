@@ -1,0 +1,30 @@
+[
+    {
+      "image": "https://placehold.co/600x400/1e1e1e/FFF?text=Front-End",
+      "title": "Front-End",
+      "skills": ["HTML5 & CSS3", "JavaScript (ES6+)", "Bootstrap 5", "ReactJS"],
+      "borderColor": "#38bdf8",
+      "gradient": "linear-gradient(135deg, #38bdf8, #2563eb)"
+    },
+    {
+      "image": "https://placehold.co/600x400/1e1e1e/FFF?text=Back-End",
+      "title": "Back-End",
+      "skills": ["Java", "Python", "PHP",  "Node.JS Basics", "Google Firebase"],
+      "borderColor": "#a855f7",
+      "gradient": "linear-gradient(135deg, #a855f7, #6366f1)"
+    },
+    {
+      "image": "https://placehold.co/600x400/1e1e1e/FFF?text=Data",
+      "title": "Data Management",
+      "skills": ["MySQL", "PHP MyAdmin", "Google Cloud Firestore"],
+      "borderColor": "#f59e0b",
+      "gradient": "linear-gradient(135deg, #f59e0b, #ea580c)"
+    },
+    {
+      "image": "https://placehold.co/600x400/1e1e1e/FFF?text=AI+%26+Cloud",
+      "title": "AI & Cloud Computing",
+      "skills": ["Google Cloud Platform", "OpenAI API Integration", "Machine Learning Basics"],
+      "borderColor": "#10b981",
+      "gradient": "linear-gradient(135deg, #10b981, #059669)"
+    }
+]

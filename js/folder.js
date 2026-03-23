@@ -146,7 +146,7 @@ const initResumeFolder = () => {
 
     if (document.getElementById('resume-folder-container')) {
         new FolderEffect('resume-folder-container', {
-            resumeUrl: '../assets/docs/sean_lacson_resume.pdf'
+            resumeUrl: '../assets/docs/sean-lacson-resume.pdf' // Update the resume path here.
         });
     }
 };

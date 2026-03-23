@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
             loadComponent('pages/my_works.html', 'my-works-container'),
             loadComponent('pages/my_skills.html', 'my-skills-container'),
             loadComponent('pages/my_resume.html', 'my-resume-container'),
-            loadComponent('pages/contact.html', 'contact-me-container')
+            loadComponent('pages/contact.html', 'contact-me-container'),
+            loadComponent('components/footer.html', 'footer-container')
         ]);
 
     }

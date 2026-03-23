@@ -87,6 +87,10 @@ body, body {
     order: 3; /* Right */
 }
 
+.divider-container p {
+  font-size: 0.7em;
+}
+
 /* Responsive Adjustments */
 @media (max-width: 768px) {
     .divider-container {

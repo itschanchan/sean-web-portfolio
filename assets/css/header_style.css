@@ -47,6 +47,13 @@ html {
 
 .my_logo {
     height: 70px;
+    filter: invert(1);
+    transition: filter 0.3s ease;
+}
+
+/* Logo (SVG Image) darkens when theme is light mode */
+html[data-theme="dark"] .my_logo {
+    filter: invert(0);
 }
 
 @keyframes bob {

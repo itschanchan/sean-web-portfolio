@@ -1,17 +1,31 @@
 @import url('https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Paytone+One&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
+.my-skills-container {
+    position: relative;
+    height: 120vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 .my-skills {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding-left: 80px;
     margin-top: 100px;
-
 }
 
 .my-skills h1 {
     font-family: 'Funnel Display', sans-serif;
-    font-size: 2.5rem;
+    font-size: 5rem;
+}
+
+.tools-section h4 {
+    font-family: 'Funnel Display', sans-serif;
+    font-size: 5rem;
 }
 
 .chroma-grid {
@@ -204,4 +218,36 @@
 
   opacity: 1;
   transition: opacity 0.25s ease;
+}
+
+/* --- Tools Section --- */
+.tools-section {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.tools-section h4 {
+    font-family: 'Funnel Display', sans-serif;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+.tools-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.tool-chip {
+    padding: 10px 20px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-color);
+}
+
+.tool-chip .material-symbols-outlined {
+    font-size: 18px;
 }

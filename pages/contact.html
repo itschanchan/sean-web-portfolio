@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="../assets/css/colors.css">
 <link rel="stylesheet" href="../assets/css/contact_style.css">
 
-<div class="contact guidelines" id="contact-me-container">
+<div class="contact guidelines" id="contact-intro">
     <h1>Get In Touch</h1>
     <hr>
     <p>You can reach me through any of the following channels:</p>
@@ -31,47 +31,74 @@
 
 <div class="contact-row guidelines">
     <!-- Email -->
-    <div class="contact-card">
+    <a href="mailto:sean.andrei99@gmail.com" class="contact-card" style="text-decoration: none; color: inherit;">
         <span class="contact-title">Email</span>
         <div class="icon-box glass-effect border-glow-effect">
             <span class="material-symbols-outlined">mail</span>
         </div>
-        <a href="mailto:sean.andrei99@gmail.com">sean.andrei99@gmail.com</a>
-    </div>
+        <!-- <span>sean.andrei99@gmail.com</span> -->
+    </a>
 
     <!-- School Email -->
-    <div class="contact-card">
+    <a href="mailto:andrei.lacson@ciit.edu.ph" class="contact-card" style="text-decoration: none; color: inherit;">
         <span class="contact-title">School Email</span>
         <div class="icon-box glass-effect border-glow-effect">
             <span class="material-symbols-outlined">school</span>
         </div>
-        <a href="mailto:andrei.lacson@ciit.edu.ph">andrei.lacson@ciit.edu.ph</a>
-    </div>
+        <!-- <span>andrei.lacson@ciit.edu.ph</span> -->
+    </a>
 
     <!-- Facebook -->
-    <div class="contact-card">
+    <a href="https://www.facebook.com/itschanchan22" target="_blank" rel="noopener noreferrer" class="contact-card" style="text-decoration: none; color: inherit;">
         <span class="contact-title">Facebook</span>
         <div class="icon-box glass-effect border-glow-effect">
             <span class="material-symbols-outlined">face</span>
         </div>
-        <span>Sean Andrei Lacson</span>
-    </div>
+        <!-- <span>Sean Andrei Lacson</span> -->
+    </a>
 
     <!-- Instagram -->
-    <div class="contact-card">
+    <!-- <a href="https://www.instagram.com/_itschanchan" target="_blank" rel="noopener noreferrer" class="contact-card" style="text-decoration: none; color: inherit;">
         <span class="contact-title">Instagram</span>
         <div class="icon-box glass-effect border-glow-effect">
             <span class="material-symbols-outlined">photo_camera</span>
         </div>
-        <a href="https://www.instagram.com/_itschanchan" target="_blank" rel="noopener noreferrer">_itschanchan</a>
-    </div>
+        <span>_itschanchan</span>
+    </a> -->
 
     <!-- Github -->
-    <div class="contact-card">
+    <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="contact-card" style="text-decoration: none; color: inherit;">
         <span class="contact-title">GitHub</span>
         <div class="icon-box glass-effect border-glow-effect">
             <span class="material-symbols-outlined">terminal</span>
         </div>
-        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">github.com</a>
-    </div>
+        <!-- <span>github.com</span> -->
+    </a>
 </div>
+
+<script>
+    document.querySelector('.contact-form form').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const company = document.getElementById('company').value.trim();
+        const message = document.getElementById('message').value.trim();
+
+        if (!name || !email || !message) {
+            alert("Please fill in all required fields.");
+            return;
+        }
+
+        const targetEmail = "sean.andrei99@gmail.com";
+        const subject = `Project Inquiry from ${name}`;
+        
+        let body = `Name: ${name}\nEmail: ${email}`;
+        if (company) body += `\nCompany: ${company}`;
+        body += `\n\nMessage:\n${message}`;
+
+        const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(targetEmail)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        
+        window.open(gmailUrl, '_blank', 'noopener,noreferrer');
+    });
+</script>

@@ -1,36 +1,27 @@
-(function() {
+(async function() {
     // --- Configuration & Data ---
     const config = {
         radius: 300,
-        columns: 3,
+        columns: 2,
         damping: 0.45,
         fadeOut: 0.6,
         ease: 'power3.out'
     };
 
-    const data = [
-        {
-          image: 'https://placehold.co/600x400/222/fff?text=Web+Dev',
-          title: 'Web Development',
-          skills: ['HTML, CSS, JavaScript', 'Bootstrap / Tailwind CSS', 'MERN Stack', 'Using VS Code'],
-          borderColor: '#4F46E5',
-          gradient: 'linear-gradient(145deg, #4F46E5, #000)'
-        },
-        {
-          image: 'https://placehold.co/600x400/222/fff?text=Mobile+App',
-          title: 'Mobile App Development',
-          skills: ['Java Kotlin', 'Dart Flutter', 'Using Android Studio and VS Code'],
-          borderColor: '#10B981',
-          gradient: 'linear-gradient(210deg, #10B981, #000)'
-        },
-        {
-          image: 'https://placehold.co/600x400/222/fff?text=Data+Mgmt',
-          title: 'Data Management',
-          skills: ['PHP mySQL', 'Google Firebase'],
-          borderColor: '#F59E0B',
-          gradient: 'linear-gradient(165deg, #F59E0B, #000)'
+    // Fetch Skills Data
+    let data = [];
+    try {
+        const response = await fetch('data/skills_data.json');
+        if (response.ok) {
+            data = await response.json();
+        } else {
+            console.error('Failed to load skills data');
+            return;
         }
-    ];
+    } catch (error) {
+        console.error('Error loading skills data:', error);
+        return;
+    }
 
     // --- DOM Elements ---
     const container = document.getElementById('chroma-grid-container');
@@ -102,7 +93,12 @@
     fade.className = 'chroma-fade';
     grid.appendChild(fade);
 
-    container.appendChild(grid);
+    // Insert grid before other content (like the static tools section)
+    if (container.firstChild) {
+        container.insertBefore(grid, container.firstChild);
+    } else {
+        container.appendChild(grid);
+    }
 
     // --- GSAP Animation Logic ---
     // Cache the grid's bounding rectangle and update it on resize to avoid reflows on mouse move.

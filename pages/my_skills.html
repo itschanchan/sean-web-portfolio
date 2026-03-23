@@ -2,18 +2,45 @@
 <link rel="stylesheet" href="../assets/css/colors.css">
 <link rel="stylesheet" href="../assets/css/my_skills_style.css">
 
-<div class="d-flex align-items-center justify-content-center">
+<div class="my-skills-container guidelines d-flex align-items-center justify-content-center">
     <!-- This will be the container for our grid -->
-    <div class="guidelines" id="chroma-grid-container"></div>
+    <div class="guidelines" id="chroma-grid-container">
+        <!-- Grid will be prepended here by JS -->
+
+        <!-- Tools Section (HTML) -->
+        <div class="tools-section">
+            <h4>Development Tools</h4>
+            <div class="tools-grid">
+                <div class="tool-chip glass-effect border-glow-effect">
+                    <span class="material-symbols-outlined">code</span> VS Code
+                </div>
+                <div class="tool-chip glass-effect border-glow-effect">
+                    <span class="material-symbols-outlined">smartphone</span> Android Studio
+                </div>
+                <div class="tool-chip glass-effect border-glow-effect">
+                    <span class="material-symbols-outlined">devices</span> Flutter
+                </div>
+                <div class="tool-chip glass-effect border-glow-effect">
+                    <span class="material-symbols-outlined">history</span> Git & GitHub
+                </div>
+                <div class="tool-chip glass-effect border-glow-effect">
+                    <span class="material-symbols-outlined">database</span> Firebase
+                </div>
+                <div class="tool-chip glass-effect border-glow-effect">
+                    <span class="material-symbols-outlined">send</span> PHP MyAdmin
+                </div>
+                <div class="tool-chip glass-effect border-glow-effect">
+                    <span class="material-symbols-outlined">send</span> mySQL
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="my-skills guidelines ps-5" id="my-skills">
         <p></p>
         <h1>Skills</h1>
     </div>
 </div>
-
-<!-- GSAP library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
 <!-- Custom script to build and manage the grid -->
 <script src="../js/chromaGrid.js"></script>

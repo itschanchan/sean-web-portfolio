@@ -55,7 +55,7 @@ const fragmentSrc = `
     col = mix(col, uColor3, b3 * 0.6);
 
     // subtle grain
-    float g = noise(uv * 200.0) * 0.04;
+    float g = noise(uv * 200.0) * 0.02; // [ADJUST GRAIN] 0.04 = intensity, 200.0 = density
     col += g;
 
     gl_FragColor = vec4(col, 1.0);
@@ -136,16 +136,16 @@ function initGrainient() {
   // Color Configurations
   const themes = {
     light: {
-      c1: hexToRgb('#FF9FFC'),
-      c2: hexToRgb('#5227FF'),
-      c3: hexToRgb('#B19EEF'),
-      base: [0.97, 0.97, 0.98]
+      c1: hexToRgb('#FF9FFC'), // [ADJUST COLOR] Primary Gradient
+      c2: hexToRgb('#5227FF'), // [ADJUST COLOR] Secondary Gradient
+      c3: hexToRgb('#B19EEF'), // [ADJUST COLOR] Tertiary Gradient
+      base: [0.97, 0.97, 0.98] // [ADJUST COLOR] Base Background
     },
     dark: {
-      c1: hexToRgb('#4A148C'), // Deep Purple
-      c2: hexToRgb('#1A237E'), // Deep Indigo
-      c3: hexToRgb('#311B92'), // Dark Violet
-      base: [0.05, 0.05, 0.08] // Almost Black
+      c1: hexToRgb('#611cb6'), // [ADJUST COLOR] Deep Purple
+      c2: hexToRgb('#1A237E'), // [ADJUST COLOR] Deep Indigo
+      c3: hexToRgb('#311B92'), // [ADJUST COLOR] Dark Violet
+      base: [0.05, 0.05, 0.08] // [ADJUST COLOR] Base Background
     }
   };
 
@@ -161,7 +161,7 @@ function initGrainient() {
 
   // Initial Set
   updateThemeColors();
-  gl.uniform1f(uTimeSpeed, 0.25);
+  gl.uniform1f(uTimeSpeed, 0.50); // [ADJUST SPEED] Lower = slower, Higher = faster
 
   // Listen for Theme Change
   window.addEventListener('theme-changed', () => {

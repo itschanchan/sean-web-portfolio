@@ -4,15 +4,23 @@
 <link rel="stylesheet" href="../assets/css/banner_style.css">
 
 <div class="banner guidelines">
-    <div class="velocity-text" data-direction="1"></div>
-    <img 
-        src="../assets/images/sample/sample_pancham.jpg" 
-        alt="pancham" 
-        class="banner-image"
-    >
-    <div class="velocity-text" data-direction="-1"></div>
+    <div class="sticky-wrapper">
+        <div class="velocity-text" data-direction="1"></div>
+        
+        <div class="banner-content">
+            <div class="center-line"></div>
+            <div class="image-track">
+                <div class="image-segment"><img src="https://camo.githubusercontent.com/5e45bc648dba68520ce949a53690af6bcef2880f84a1d46cbb1636649afd6d84/68747470733a2f2f796176757a63656c696b65722e6769746875622e696f2f73616d706c652d696d616765732f696d6167652d313032312e6a7067" alt="Image 1"></div>
+                <div class="image-segment"><img src="https://thumbs.dreamstime.com/b/sample-jpeg-heartwarming-close-up-endearing-small-mouse-happily-munching-piece-cheese-357411130.jpg" alt="Image 2"></div>
+                <div class="image-segment"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0G4Jj47yiz5zOPtf3AAha0jxUcoX4SAo_Gw&s" alt="Image 3"></div>
+                <div class="image-segment"><img src="../assets/images/sample/sample_pancham.jpg" alt="Pancham"></div>
+            </div>
+        </div>
+
+        <div class="velocity-text" data-direction="-1"></div>
+    </div>
 </div>
 
 <!-- Script -->
-<script src="js/scrollVelocity.js"></script>
-<script src="js/scrollScaling.js"></script>
+<script src="../js/scrollFauxHorizontal.js"></script>
+<script src="../js/scrollVelocity.js"></script>

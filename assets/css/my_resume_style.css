@@ -3,23 +3,29 @@
     flex-direction: column;
     align-items: flex-start;
     padding-left: 80px;
-    margin-top: 2rem;
+    margin-top: 0;
 
     font-family: 'Funnel Display', sans-serif;
     font-size: 2.5rem;
     font-weight: bold;
 }
 
-
 .my-resume {
     margin-top: 0;
     padding: 3rem;
     width: 100%;
-    min-height: 80vh;
+    /* min-height: 60vh; */
+    height: 500px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
+.resume-instructions {
+  border-radius: 50px;
+  padding: 1rem 2rem;
+}
+
 
 /* Folder Container Centering */
 #resume-folder-container {

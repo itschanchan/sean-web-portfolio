@@ -6,6 +6,9 @@
     <title>Sean Lacson | Portfolio</title>
 
     <!-- Style Imports -->
+    <!-- Load Bootstrap FIRST so custom styles can override it -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="assets/css/main_style.css">
     <link rel="stylesheet" href="assets/css/colors.css">
     <link rel="stylesheet" href="assets/css/header_style.css">
@@ -17,7 +20,6 @@
 
     <!-- 3rd Party Libraries -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     
 </head>
 <body>
@@ -113,7 +115,7 @@
         });
     </script>
 
-    <!-- Script -->
+    <!-- Grainient Script -->
     <script type="module" src="js/grainient.js"></script>
     
     <!-- Global GSAP & ScrollTrigger -->
@@ -121,10 +123,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>gsap.registerPlugin(ScrollTrigger);</script>
 
-    <!-- Lenis Smooth Scroll (High Performance) -->
-    <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
-
-    <!-- <script src="js/scrollSoap.js"></script> -->
+    <!-- Other Custom Scripts -->
+    <script src="js/scrollSoap.js"></script>
     <script src="js/loaders.js"></script>
     <script src="js/scrollVelocity.js"></script>
     <script src="js/scrollScaling.js"></script>
@@ -133,5 +133,8 @@
 
     <!-- 3rd Party JS Bundles -->
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Lenis Smooth Scroll (High Performance) -->
+    <script src="https://unpkg.com/lenis@1.1.14/dist/lenis.min.js"></script>
 </body>
 </html>

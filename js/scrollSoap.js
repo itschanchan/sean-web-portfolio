@@ -18,15 +18,8 @@ document.addEventListener('DOMContentLoaded', () => {
         touchMultiplier: 2,
     });
 
-    // Main Animation Loop
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
-
-    // Integration with GSAP ScrollTrigger
-    if (typeof ScrollTrigger !== 'undefined') {
+    // Integration with GSAP ScrollTrigger (Best Performance)
+    if (typeof ScrollTrigger !== 'undefined' && typeof gsap !== 'undefined') {
         lenis.on('scroll', ScrollTrigger.update);
         
         gsap.ticker.add((time) => {
@@ -34,6 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         
         gsap.ticker.lagSmoothing(0);
+    } else {
+        // Fallback: Use native RAF only if GSAP is not present
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
     }
 
     // Handle Anchor Links (Smooth scroll to section)

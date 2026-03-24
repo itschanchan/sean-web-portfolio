@@ -1,205 +1,175 @@
-function hexToRgb(hex) {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-  if (!result) return [1, 1, 1];
-  return [
-    parseInt(result[1], 16) / 255,
-    parseInt(result[2], 16) / 255,
-    parseInt(result[3], 16) / 255
-  ];
-}
+/**
+ * WebGL Grainient - High Performance Background
+ * Renders a gradient and noise directly on the GPU to free up the CPU main thread.
+ */
+(function() {
+    // --- Configuration: Adjust variables here ---
+    const config = {
+        grainStrength: 0.04,  // Intensity of the noise/grain
+        animationSpeed: 0.2,  // Speed of the blob movement
+        colors: {
+            light: {
+                bg: '#EBEBF0',      // Light Gray/White
+                c1: '#D9CCE6',      // Soft Purple
+                c2: '#CCE0EB'       // Soft Blue
+            },
+            dark: {
+                bg: '#05050D',      // Deep Dark Blue/Black
+                c1: '#260D40',      // Deep Purple Glow
+                c2: '#0D2633'       // Deep Teal Glow
+            }
+        }
+    };
 
-const vertexSrc = `
-  attribute vec2 position;
-  void main() {
-    gl_Position = vec4(position, 0.0, 1.0);
-  }
-`;
+    const container = document.getElementById('grainient');
+    if (!container) return;
 
-const fragmentSrc = `
-  precision highp float;
+    // Helper: Convert Hex (#RRGGBB) to WebGL Normalized RGB ([0..1, 0..1, 0..1])
+    function hexToWebgl(hex) {
+        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+        const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+        hex = hex.replace(shorthandRegex, (m, r, g, b) => r + r + g + g + b + b);
 
-  uniform vec2 iResolution;
-  uniform float iTime;
-  uniform float uTimeSpeed;
-  uniform vec3 uColor1; // lavender
-  uniform vec3 uColor2; // peach
-  uniform vec3 uColor3; // sky
-  uniform vec3 uBaseColor; // Base background
-
-  // soft radial blob
-  float blob(vec2 uv, vec2 pos, float radius, float blur) {
-    float d = distance(uv, pos);
-    return smoothstep(radius, radius - blur, d);
-  }
-
-  vec2 hash(vec2 p){p=vec2(dot(p,vec2(2127.1,81.17)),dot(p,vec2(1269.5,283.37)));return fract(sin(p)*43758.5453);}    
-  float noise(vec2 p){vec2 i=floor(p),f=fract(p),u=f*f*(3.0-2.0*f);float n=mix(mix(dot(-1.0+2.0*hash(i+vec2(0.0,0.0)),f-vec2(0.0,0.0)),dot(-1.0+2.0*hash(i+vec2(1.0,0.0)),f-vec2(1.0,0.0)),u.x),mix(dot(-1.0+2.0*hash(i+vec2(0.0,1.0)),f-vec2(0.0,1.0)),dot(-1.0+2.0*hash(i+vec2(1.0,1.0)),f-vec2(1.0,1.0)),u.x),u.y);return 0.5+0.5*n;}
-
-  void main(){
-    vec2 uv = gl_FragCoord.xy / iResolution.xy;
-
-    // subtle movement like your reference
-    float t = iTime * uTimeSpeed;
-    uv += (noise(uv * 2.0 + t) - 0.5) * 0.03;
-
-    // base (light background)
-    vec3 col = uBaseColor;
-
-    // three radial gradients (like your CSS reference)
-    float b1 = blob(uv, vec2(0.2, 0.3), 0.5, 0.6);
-    float b2 = blob(uv, vec2(0.8, 0.7), 0.5, 0.6);
-    float b3 = blob(uv, vec2(0.5, 0.5), 0.8, 0.9);
-
-    col = mix(col, uColor1, b1 * 0.6);
-    col = mix(col, uColor2, b2 * 0.6);
-    col = mix(col, uColor3, b3 * 0.6);
-
-    // subtle grain
-    float g = noise(uv * 200.0) * 0.02; // [ADJUST GRAIN] 0.04 = intensity, 200.0 = density
-    col += g;
-
-    gl_FragColor = vec4(col, 1.0);
-  }
-`;
-
-function createShader(gl, type, source) {
-  const shader = gl.createShader(type);
-  gl.shaderSource(shader, source);
-  gl.compileShader(shader);
-
-  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    console.error(gl.getShaderInfoLog(shader));
-    gl.deleteShader(shader);
-    return null;
-  }
-  return shader;
-}
-
-function createProgram(gl, vertexSrc, fragmentSrc) {
-  const vs = createShader(gl, gl.VERTEX_SHADER, vertexSrc);
-  const fs = createShader(gl, gl.FRAGMENT_SHADER, fragmentSrc);
-
-  const program = gl.createProgram();
-  gl.attachShader(program, vs);
-  gl.attachShader(program, fs);
-  gl.linkProgram(program);
-
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-    console.error(gl.getProgramInfoLog(program));
-    return null;
-  }
-  return program;
-}
-
-function initGrainient() {
-  const container = document.getElementById('grainient');
-  const canvas = document.createElement('canvas');
-  container.appendChild(canvas);
-
-  const gl = canvas.getContext('webgl');
-  if (!gl) {
-    alert('WebGL not supported');
-    return;
-  }
-
-  const program = createProgram(gl, vertexSrc, fragmentSrc);
-  gl.useProgram(program);
-
-  const position = gl.getAttribLocation(program, 'position');
-
-  const buffer = gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-  gl.bufferData(
-    gl.ARRAY_BUFFER,
-    new Float32Array([
-      -1, -1,
-      1, -1,
-      -1,  1,
-      -1,  1,
-      1, -1,
-      1,  1
-    ]),
-    gl.STATIC_DRAW
-  );
-
-  gl.enableVertexAttribArray(position);
-  gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
-
-  const iResolution = gl.getUniformLocation(program, 'iResolution');
-  const iTime = gl.getUniformLocation(program, 'iTime');
-  const uTimeSpeed = gl.getUniformLocation(program, 'uTimeSpeed');
-  const uColor1 = gl.getUniformLocation(program, 'uColor1');
-  const uColor2 = gl.getUniformLocation(program, 'uColor2');
-  const uColor3 = gl.getUniformLocation(program, 'uColor3');
-  const uBaseColor = gl.getUniformLocation(program, 'uBaseColor');
-
-  // Color Configurations
-  const themes = {
-    light: {
-      c1: hexToRgb('#FF9FFC'), // [ADJUST COLOR] Primary Gradient
-      c2: hexToRgb('#5227FF'), // [ADJUST COLOR] Secondary Gradient
-      c3: hexToRgb('#B19EEF'), // [ADJUST COLOR] Tertiary Gradient
-      base: [0.97, 0.97, 0.98] // [ADJUST COLOR] Base Background
-    },
-    dark: {
-      c1: hexToRgb('#611cb6'), // [ADJUST COLOR] Deep Purple
-      c2: hexToRgb('#1A237E'), // [ADJUST COLOR] Deep Indigo
-      c3: hexToRgb('#311B92'), // [ADJUST COLOR] Dark Violet
-      base: [0.05, 0.05, 0.08] // [ADJUST COLOR] Base Background
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? [
+            parseInt(result[1], 16) / 255,
+            parseInt(result[2], 16) / 255,
+            parseInt(result[3], 16) / 255
+        ] : [0, 0, 0];
     }
-  };
 
-  function updateThemeColors() {
-    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-    const theme = isDark ? themes.dark : themes.light;
+    // Create Canvas
+    const canvas = document.createElement('canvas');
+    canvas.style.display = 'block';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    container.appendChild(canvas);
 
-    gl.uniform3fv(uColor1, theme.c1);
-    gl.uniform3fv(uColor2, theme.c2);
-    gl.uniform3fv(uColor3, theme.c3);
-    gl.uniform3fv(uBaseColor, theme.base);
-  }
+    const gl = canvas.getContext('webgl');
+    if (!gl) {
+        console.warn('WebGL not supported, gradient disabled.');
+        return;
+    }
 
-  // Initial Set
-  updateThemeColors();
-  gl.uniform1f(uTimeSpeed, 0.50); // [ADJUST SPEED] Lower = slower, Higher = faster
+    // --- Shaders ---
 
-  // Listen for Theme Change
-  window.addEventListener('theme-changed', () => {
-    updateThemeColors();
-  });
+    const vsSource = `
+        attribute vec4 a_position;
+        void main() {
+            gl_Position = a_position;
+        }
+    `;
 
-  // Observe HTML attribute changes to catch delayed theme updates from header.html
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
-        updateThemeColors();
-      }
-    });
-  });
-  observer.observe(document.documentElement, { attributes: true });
+    const fsSource = `
+        precision mediump float;
+        uniform vec2 u_resolution;
+        uniform float u_time;
+        uniform float u_speed;
+        uniform float u_grain;
+        uniform vec3 u_bg;
+        uniform vec3 u_c1;
+        uniform vec3 u_c2;
 
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    gl.viewport(0, 0, canvas.width, canvas.height);
-    gl.uniform2f(iResolution, canvas.width, canvas.height);
-  }
+        // Pseudo-random noise function
+        float random(vec2 st) {
+            return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+        }
 
-  window.addEventListener('resize', resize);
-  resize();
+        void main() {
+            vec2 st = gl_FragCoord.xy / u_resolution.xy;
+            
+            // Slow down time for a relaxed feel
+            float t = u_time * u_speed;
+            
+            // Define moving color points
+            vec2 p1 = vec2(0.5 + 0.4 * sin(t), 0.5 + 0.4 * cos(t * 0.8));
+            vec2 p2 = vec2(0.5 + 0.4 * cos(t * 1.2), 0.5 + 0.4 * sin(t * 0.9));
+            
+            // Base Colors (Dark Theme Match)
+            vec3 bg = u_bg;
+            vec3 color1 = u_c1;
+            vec3 color2 = u_c2;
+            
+            // Calculate distance for soft radial gradients
+            float d1 = distance(st, p1);
+            float d2 = distance(st, p2);
+            
+            // Mix colors
+            vec3 color = bg;
+            color = mix(color, color1, smoothstep(0.8, 0.0, d1));
+            color = mix(color, color2, smoothstep(0.8, 0.0, d2));
+            
+            // Add animated noise (Film Grain)
+            float noise = random(st + t);
+            float grainStrength = u_grain;
+            
+            color += (noise - 0.5) * grainStrength;
+            
+            gl_FragColor = vec4(color, 1.0);
+        }
+    `;
 
-  let start = performance.now();
+    // --- WebGL Setup Helpers ---
 
-  function render(now) {
-    const t = (now - start) * 0.001;
-    gl.uniform1f(iTime, t);
+    function createShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) return null;
+        return shader;
+    }
 
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
+    const vs = createShader(gl, gl.VERTEX_SHADER, vsSource);
+    const fs = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+    
+    const program = gl.createProgram();
+    gl.attachShader(program, vs);
+    gl.attachShader(program, fs);
+    gl.linkProgram(program);
 
+    const positionLocation = gl.getAttribLocation(program, "a_position");
+    const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
+    const timeLocation = gl.getUniformLocation(program, "u_time");
+    const speedLocation = gl.getUniformLocation(program, "u_speed");
+    const grainLocation = gl.getUniformLocation(program, "u_grain");
+    const bgLocation = gl.getUniformLocation(program, "u_bg");
+    const c1Location = gl.getUniformLocation(program, "u_c1");
+    const c2Location = gl.getUniformLocation(program, "u_c2");
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+
+    // --- Render Loop ---
+
+    function render(time) {
+        // Handle Resize
+        if (canvas.width !== container.clientWidth || canvas.height !== container.clientHeight) {
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+
+        gl.useProgram(program);
+        gl.enableVertexAttribArray(positionLocation);
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+        gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+        gl.uniform1f(timeLocation, time * 0.001);
+
+        // Determine Theme (Dark/Light)
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const palette = isDark ? config.colors.dark : config.colors.light;
+
+        gl.uniform1f(speedLocation, config.animationSpeed);
+        gl.uniform1f(grainLocation, config.grainStrength);
+        gl.uniform3fv(bgLocation, hexToWebgl(palette.bg));
+        gl.uniform3fv(c1Location, hexToWebgl(palette.c1));
+        gl.uniform3fv(c2Location, hexToWebgl(palette.c2));
+
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        requestAnimationFrame(render);
+    }
     requestAnimationFrame(render);
-  }
-
-  requestAnimationFrame(render);
-}
-
-initGrainient();
+})();

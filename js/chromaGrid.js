@@ -60,27 +60,38 @@
         });
 
         let cardRect = null; // Cache for the card's bounding rectangle
+        let isHovering = false;
+        let mouseX = 0, mouseY = 0;
+        let rafId = null;
+
+        // Function to batch DOM updates
+        const updateCardStyle = () => {
+            if (!isHovering) return;
+            card.style.setProperty('--mouse-x', `${mouseX}px`);
+            card.style.setProperty('--mouse-y', `${mouseY}px`);
+            rafId = requestAnimationFrame(updateCardStyle);
+        };
 
         card.addEventListener('mousemove', e => {
             // Use the cached rect; if it's null, the mouse just entered.
             if (!cardRect) cardRect = card.getBoundingClientRect();
-            const x = e.clientX - cardRect.left;
-            const y = e.clientY - cardRect.top;
-            card.style.setProperty('--mouse-x', `${x}px`);
-            card.style.setProperty('--mouse-y', `${y}px`);
+            mouseX = e.clientX - cardRect.left;
+            mouseY = e.clientY - cardRect.top;
         });
 
         // Reveal color on hover by bringing the card in front of the overlays
         card.addEventListener('mouseenter', () => {
-            // Cache the card's position and dimensions on hover to avoid recalculating on every mouse move
             cardRect = card.getBoundingClientRect();
-            // The overlays have z-indexes of 3 and 4, so 5 will bring this card to the front.
             card.style.zIndex = '5';
+            isHovering = true;
+            rafId = requestAnimationFrame(updateCardStyle);
         });
 
         card.addEventListener('mouseleave', () => {
             cardRect = null; // Clear the cache
             card.style.zIndex = ''; // Reset to its default stacking context
+            isHovering = false;
+            if (rafId) cancelAnimationFrame(rafId);
         });
         grid.appendChild(card);
     });
@@ -103,9 +114,13 @@
     // --- GSAP Animation Logic ---
     // Cache the grid's bounding rectangle and update it on resize to avoid reflows on mouse move.
     let gridRect = grid.getBoundingClientRect();
-    window.addEventListener('resize', () => {
+    
+    const updateGridRect = () => {
         gridRect = grid.getBoundingClientRect();
-    });
+    };
+
+    window.addEventListener('resize', updateGridRect);
+    window.addEventListener('scroll', updateGridRect, { passive: true }); // Update rects on scroll to keep mouse calculation accurate
 
     const setX = gsap.quickSetter(grid, '--x', 'px');
     const setY = gsap.quickSetter(grid, '--y', 'px');

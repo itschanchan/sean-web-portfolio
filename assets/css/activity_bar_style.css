@@ -50,4 +50,11 @@
     font-size: 24px;
     /* Optional: Filled style on hover if desired */
     /* font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; */
+    transition: font-variation-settings 0.3s ease;
+}
+
+/* Active State: Filled Icon */
+.activity-bar a.active .material-symbols-outlined {
+    font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }

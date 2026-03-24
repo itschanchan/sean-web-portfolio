@@ -1,8 +1,15 @@
+.resume-cv-row {
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+
 .resume-title {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding-left: 80px;
+    align-items: center; /* Center align for column layout */
     margin-top: 0;
 
     font-family: 'Funnel Display', sans-serif;
@@ -10,7 +17,12 @@
     font-weight: bold;
 }
 
-.my-resume {
+/* Reuse styles for CV Title */
+.cv-title {
+    color-scheme: resume-title;
+}
+
+.my-resume, .my-cv {
     margin-top: 0;
     padding: 3rem;
     width: 100%;
@@ -21,14 +33,14 @@
     align-items: center;
 }
 
-.resume-instructions {
+.resume-instructions, .cv-instructions {
   border-radius: 50px;
   padding: 1rem 2rem;
 }
 
 
 /* Folder Container Centering */
-#resume-folder-container {
+.folder-container {
     display: flex;
     justify-content: center;
     align-items: center;

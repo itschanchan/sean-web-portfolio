@@ -5,6 +5,10 @@ class FolderEffect {
 
         this.resumeUrl = options.resumeUrl || '';
         this.scale = options.scale || 3; // Default scale to make it visible
+        this.modalId = options.modalId || 'resumeModal';
+        this.iframeId = options.iframeId || 'resume-iframe';
+        this.dateId = options.dateId || 'resume-date';
+        this.docName = options.docName || 'Resume'; 
         this.init();
     }
 
@@ -45,10 +49,10 @@ class FolderEffect {
                 <div class="folder__back">
                     <div class="paper"></div>
                     <div class="paper"></div>
-                    <div class="paper" id="resume-paper" style="overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; background: #fff;">
+                    <div class="paper folder-doc-trigger" style="overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer; background: #fff;">
                         <div style="text-align: center; pointer-events: none;">
                             <span style="display: block; font-size: 6px; text-transform: uppercase; color: #666; margin-bottom: 2px;">Click to open</span>
-                            <span style="display: block; font-size: 8px; font-weight: bold; text-transform: uppercase; color: #000;">Resume</span>
+                            <span style="display: block; font-size: 8px; font-weight: bold; text-transform: uppercase; color: #000;">${this.docName}</span>
                         </div>
                     </div>
                     <div class="folder__front"></div>
@@ -74,20 +78,21 @@ class FolderEffect {
         });
 
         // Resume Paper Interaction
-        const resumePaper = wrapper.querySelector('#resume-paper');
-        resumePaper.addEventListener('click', (e) => {
+        const docPaper = wrapper.querySelector('.folder-doc-trigger');
+        docPaper.addEventListener('click', (e) => {
             if (folder.classList.contains('open')) {
                 e.stopPropagation(); // Prevent folder from closing when clicking the paper
                 
-                const modalEl = document.getElementById('resumeModal');
+                const modalEl = document.getElementById(this.modalId);
                 if (modalEl) {
-                    const iframe = document.getElementById('resume-iframe');
+                    // FIX: Scope search to modalEl to ensure we target the iframe INSIDE the modal
+                    const iframe = modalEl.querySelector('iframe');
                     if (iframe && !iframe.getAttribute('src')) {
                         iframe.src = this.resumeUrl;
                     }
 
                     // Fetch Last Modified Date of the PDF
-                    const dateEl = document.getElementById('resume-date');
+                    const dateEl = modalEl.querySelector(`#${this.dateId}`);
                     if (dateEl) {
                         fetch(this.resumeUrl, { method: 'HEAD' })
                             .then(response => {
@@ -138,15 +143,32 @@ class FolderEffect {
 
 // Initialize for Resume Page
 const initResumeFolder = () => {
-    // FIX: Move modal to body to prevent scrollSoap.js transform issues
-    const modal = document.getElementById('resumeModal');
-    if (modal && modal.parentNode !== document.body) {
-        document.body.appendChild(modal);
-    }
+    // FIX: Move modals to body to prevent scrollSoap.js transform issues
+    ['resumeModal', 'cvModal'].forEach(id => {
+        const modal = document.getElementById(id);
+        if (modal && modal.parentNode !== document.body) {
+            document.body.appendChild(modal);
+
+            // FIX: Ensure the modal content clips the square iframe corners
+            const content = modal.querySelector('.modal-content');
+            if (content) content.style.overflow = 'hidden';
+        }
+    });
 
     if (document.getElementById('resume-folder-container')) {
         new FolderEffect('resume-folder-container', {
-            resumeUrl: '../assets/docs/sean-lacson-resume.pdf' // Update the resume path here.
+            resumeUrl: '../assets/docs/sean-lacson-resume.pdf', // Resume PDF file path
+            modalId: 'resumeModal',
+            iframeId: 'resume-iframe',
+            dateId: 'resume-date',
+            docName: 'Resume'
+        });
+        new FolderEffect('cv-folder-container', {
+            resumeUrl: '../assets/docs/sean-lacson-cv.pdf', // CV PDF file path
+            modalId: 'cvModal',
+            iframeId: 'cv-iframe',
+            dateId: 'cv-date',
+            docName: 'CV'
         });
     }
 };

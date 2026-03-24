@@ -2,15 +2,40 @@
 <link rel="stylesheet" href="../assets/css/colors.css">
 <link rel="stylesheet" href="../assets/css/my_resume_style.css">
 
-<div class="resume-title guidelines">
-    <h1>My Resume</h1>
+<!-- Main Row Container for Side-by-Side Layout -->
+<div class="resume-cv-row row guidelines w-100 m-0">
+  
+  <!-- Left Column: Resume -->
+  <div class="col-lg-6 mb-5 mb-lg-0">
+    <div class="resume-container">
+      <div class="resume-title guidelines">
+        <h1>My Resume</h1>
+      </div>
+    
+      <div class="my-resume guidelines justify-content-center text-center" id="my-resume">
+          <div id="resume-folder-container" class="folder-container guidelines"></div>
+          <p class="resume-instructions glass-effect border-glow-effect guidelines">Here is a preview of my resume. Click the folder to open it!</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Column: CV -->
+  <div class="col-lg-6">
+    <div class="cv-container">
+      <div class="cv-title guidelines">
+        <h1>My Curriculum Vitae</h1>
+      </div>
+    
+      <div class="my-cv guidelines justify-content-center text-center" id="my-cv">
+          <div id="cv-folder-container" class="folder-container guidelines"></div>
+          <p class="cv-instructions glass-effect border-glow-effect guidelines">Here is a preview of my curriculum vitae. Click the folder to open it!</p>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<div class="my-resume guidelines justify-content-center text-center" id="my-resume">
-    <div id="resume-folder-container" class="folder-container guidelines"></div>
-    <p class="resume-instructions glass-effect border-glow-effect guidelines">Here is a preview of my resume. Click the folder to open it!</p>
-    <!-- <a href="https://rxresu.me/sean.andrei99/sean-lacson-resume" class="btn btn-primary mt-5" target="_blank" role="button">View Full Resume</a> -->
-</div>
+<!-- Modals (Moved outside the grid to prevent layout issues) -->
 
 <!-- Resume Modal -->
 <div class="modal fade " id="resumeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="resumeModalLabel" aria-hidden="true">
@@ -23,6 +48,22 @@
       </div>
       <div class="modal-body p-0">
         <iframe id="resume-iframe" src="" style="width: 100%; height: 100%;" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CV Modal -->
+<div class="modal fade " id="cvModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cvModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content" style="height: 90vh;">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="cvModalLabel">My Curriculum Vitae</h1>
+        <span id="cv-date" class="small text-muted ms-3"></span>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-0">
+        <iframe id="cv-iframe" src="" style="width: 100%; height: 100%;" frameborder="0"></iframe>
       </div>
     </div>
   </div>

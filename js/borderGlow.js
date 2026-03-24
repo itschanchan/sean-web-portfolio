@@ -7,52 +7,58 @@ document.addEventListener('DOMContentLoaded', () => {
       if (card.dataset.glowInitialized) return;
       card.dataset.glowInitialized = "true";
 
-      function getCenter(el) {
-    const rect = el.getBoundingClientRect();
-    return [rect.width / 2, rect.height / 2];
+      let bounds = null;
+
+      // Efficiently update bounds only when necessary
+      const refreshBounds = () => {
+        bounds = card.getBoundingClientRect();
+      };
+
+      const updateGlow = (e) => {
+        if (!bounds) refreshBounds();
+
+        // Mouse position relative to the card (using cached bounds)
+        const x = e.clientX - bounds.left;
+        const y = e.clientY - bounds.top;
+        const cx = bounds.width / 2;
+        const cy = bounds.height / 2;
+        const dx = x - cx;
+        const dy = y - cy;
+
+        // --- Angle Math ---
+        let angle = 0;
+        if (dx !== 0 || dy !== 0) {
+          const radians = Math.atan2(dy, dx);
+          angle = radians * (180 / Math.PI) + 90;
+          if (angle < 0) angle += 360;
+        }
+
+        // --- Proximity Math ---
+        let kx = Infinity, ky = Infinity;
+        if (dx !== 0) kx = cx / Math.abs(dx);
+        if (dy !== 0) ky = cy / Math.abs(dy);
+        
+        const proximity = Math.min(Math.max(1 / Math.min(kx, ky), 0), 1);
+
+        card.style.setProperty('--edge-proximity', (proximity * 100).toFixed(3));
+        card.style.setProperty('--cursor-angle', `${angle.toFixed(3)}deg`);
+      };
+
+      // Cache bounds on hover start and update on scroll
+      card.addEventListener('mouseenter', () => {
+        refreshBounds();
+        window.addEventListener('scroll', refreshBounds, { passive: true });
+        window.addEventListener('resize', refreshBounds, { passive: true });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        window.removeEventListener('scroll', refreshBounds);
+        window.removeEventListener('resize', refreshBounds);
+      });
+
+      card.addEventListener('pointermove', updateGlow);
+    });
   }
-
-  function getEdgeProximity(el, x, y) {
-    const [cx, cy] = getCenter(el);
-    const dx = x - cx;
-    const dy = y - cy;
-
-    let kx = Infinity;
-    let ky = Infinity;
-
-    if (dx !== 0) kx = cx / Math.abs(dx);
-    if (dy !== 0) ky = cy / Math.abs(dy);
-
-    return Math.min(Math.max(1 / Math.min(kx, ky), 0), 1);
-  }
-
-  function getCursorAngle(el, x, y) {
-    const [cx, cy] = getCenter(el);
-    const dx = x - cx;
-    const dy = y - cy;
-
-    if (dx === 0 && dy === 0) return 0;
-
-    const radians = Math.atan2(dy, dx);
-    let degrees = radians * (180 / Math.PI) + 90;
-    if (degrees < 0) degrees += 360;
-
-    return degrees;
-  }
-
-  card.addEventListener('pointermove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const edge = getEdgeProximity(card, x, y);
-    const angle = getCursorAngle(card, x, y);
-
-    card.style.setProperty('--edge-proximity', (edge * 100).toFixed(3));
-    card.style.setProperty('--cursor-angle', `${angle.toFixed(3)}deg`);
-  });
-});
-    }
 
   initBorderGlow();
 

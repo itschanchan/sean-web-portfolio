@@ -1,7 +1,7 @@
 @import url('effects/glass_effect.css');
 
 html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto; /* FIX: Must be 'auto' when using Lenis to prevent scroll locking */
     scroll-padding-top: 100px; /* Ensures content isn't hidden behind the sticky header */
 }
 

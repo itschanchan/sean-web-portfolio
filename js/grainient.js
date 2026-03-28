@@ -5,7 +5,7 @@
 (function() {
     // --- Configuration: Adjust variables here ---
     const config = {
-        grainStrength: 0.04,  // Intensity of the noise/grain
+        grainStrength: 0.00,  // Intensity of the noise/grain
         animationSpeed: 0.2,  // Speed of the blob movement
         colors: {
             light: {
@@ -142,6 +142,9 @@
 
     // --- Render Loop ---
 
+    let currentTheme = null;
+    let cachedColors = { bg: [0,0,0], c1: [0,0,0], c2: [0,0,0] };
+
     function render(time) {
         // Handle Resize
         if (canvas.width !== container.clientWidth || canvas.height !== container.clientHeight) {
@@ -158,15 +161,22 @@
         gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
         gl.uniform1f(timeLocation, time * 0.001);
 
-        // Determine Theme (Dark/Light)
-        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        const palette = isDark ? config.colors.dark : config.colors.light;
+        // Determine Theme (Dark/Light) - Only re-calculate if theme changed
+        const themeAttr = document.documentElement.getAttribute('data-theme');
+        if (themeAttr !== currentTheme) {
+            currentTheme = themeAttr;
+            const isDark = currentTheme === 'dark';
+            const palette = isDark ? config.colors.dark : config.colors.light;
+            cachedColors.bg = hexToWebgl(palette.bg);
+            cachedColors.c1 = hexToWebgl(palette.c1);
+            cachedColors.c2 = hexToWebgl(palette.c2);
+        }
 
         gl.uniform1f(speedLocation, config.animationSpeed);
         gl.uniform1f(grainLocation, config.grainStrength);
-        gl.uniform3fv(bgLocation, hexToWebgl(palette.bg));
-        gl.uniform3fv(c1Location, hexToWebgl(palette.c1));
-        gl.uniform3fv(c2Location, hexToWebgl(palette.c2));
+        gl.uniform3fv(bgLocation, cachedColors.bg);
+        gl.uniform3fv(c1Location, cachedColors.c1);
+        gl.uniform3fv(c2Location, cachedColors.c2);
 
         gl.drawArrays(gl.TRIANGLES, 0, 6);
         requestAnimationFrame(render);

@@ -1,35 +1,23 @@
 (function() {
     const adSection = document.querySelector('.banner');
-
-    if (!adSection) return;
+    if (!adSection || typeof gsap === 'undefined') return;
 
     const elementsToScale = adSection.querySelectorAll('.velocity-text, .banner-image');
 
-    function animate() {
-        const rect = adSection.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-
-        // Calculate how far the section center is from the viewport center
-        const sectionCenter = rect.top + rect.height / 2;
-        const viewportCenter = viewportHeight / 2;
-        const dist = Math.abs(sectionCenter - viewportCenter);
-
-        // Maximum distance to consider (e.g., when section is roughly out of view)
-        const maxDist = (viewportHeight + rect.height) / 1.5;
-
-        // Calculate scale: 1.0 when centered, scales down to 0 at edges
-        // Formula: 1 - (dist / maxDist)
-        let scale = 1 - (dist / maxDist);
-
-        // Clamp scale between 0 and 1
-        scale = Math.max(0, Math.min(scale, 1));
-
-        elementsToScale.forEach(el => {
-            el.style.transform = `scale(${scale})`;
-        });
-
-        requestAnimationFrame(animate);
-    }
-
-    requestAnimationFrame(animate);
+    // Optimize using ScrollTrigger to handle scale based on viewport entry/exit
+    gsap.fromTo(elementsToScale, 
+        { scale: 0.5 }, 
+        { 
+            scale: 1, 
+            ease: "none",
+            scrollTrigger: {
+                trigger: adSection,
+                start: "top bottom", // Start scaling when top of banner enters bottom of viewport
+                end: "center center", // Reach full scale when banner is centered
+                scrub: true,
+                onLeave: () => gsap.to(elementsToScale, { scale: 0.5, duration: 0.5 }), // Optional: Scale back down
+                onEnterBack: () => gsap.to(elementsToScale, { scale: 1, duration: 0.5 })
+            }
+        }
+    );
 })();
